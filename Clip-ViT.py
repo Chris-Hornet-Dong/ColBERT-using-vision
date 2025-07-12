@@ -1,9 +1,21 @@
 
+import os
+
+# 设置环境变量，让模型下载到D盘
+os.environ['HF_HOME'] = 'D:/huggingface_cache/models'
+os.environ['TRANSFORMERS_CACHE'] = 'D:/huggingface_cache/transformers'
+os.environ['HF_HUB_CACHE'] = 'D:/huggingface_cache/hub'
+os.environ['HF_HUB_DISABLE_SYMLINKS_WARNING'] = '1'
+os.environ['HF_HUB_DOWNLOAD_TIMEOUT'] = '1000'
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from transformers import CLIPProcessor, CLIPModel
-import PIL
+from transformers.models.clip import CLIPProcessor, CLIPModel
+from PIL import Image
+import colbert_modules
+
+
 class VisionColBERT(nn.Module):
     def __init__(self, clip_model_name="openai/clip-vit-base-patch16", output_dim=256):
         super().__init__()
@@ -37,6 +49,6 @@ class VisionColBERT(nn.Module):
 
 # 用法示例
 model = VisionColBERT()
-images = [PIL.Image.open("test_image.jpg")]
+images = [Image.open("test_image.jpg")]
 doc_embeds = model.encode_image(images)
 print(doc_embeds)
