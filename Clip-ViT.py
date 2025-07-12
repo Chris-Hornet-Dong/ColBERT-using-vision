@@ -10,7 +10,7 @@ class VisionColBERT(nn.Module):
         self.clip = CLIPModel.from_pretrained(clip_model_name)
         self.processor = CLIPProcessor.from_pretrained(clip_model_name)
         # 可选：降维到ColBERT的维度
-        self.linear = nn.Linear(self.clip.vision_model.config.hidden_size, output_dim, bias=False)
+        self.linear = nn.Linear(self.clip.vision_model.config.hidden_size, output_dim, bias=False)#降维的线性层
 
     def encode_image(self, images):
         # images: PIL images or tensor, batch of images
@@ -39,3 +39,4 @@ class VisionColBERT(nn.Module):
 model = VisionColBERT()
 images = [PIL.Image.open("test_image.jpg")]
 doc_embeds = model.encode_image(images)
+print(doc_embeds)
