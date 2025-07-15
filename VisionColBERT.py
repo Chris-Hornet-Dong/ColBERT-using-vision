@@ -38,10 +38,7 @@ class VisionColBERT(nn.Module):
         colbert_hidden_size = self.colbert.config.hidden_size
         clip_hidden_size = self.clip.vision_model.config.hidden_size
         
-        self.clip_projection = nn.Linear(clip_hidden_size, colbert_hidden_size, bias=False)
-        
-        # 最终输出层：统一到指定维度
-        self.output_projection = nn.Linear(colbert_hidden_size, output_dim, bias=False)
+        self.clip_projection = nn.Linear(clip_hidden_size, colbert_hidden_size, bias=False)        
         
         print(f"  - ColBERT模型: {colbert_model_name}")
         print(f"  - CLIP模型: {clip_model_name}")
